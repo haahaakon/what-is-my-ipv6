@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: what-is-my-ipv6
+  namespace: what-is-my-ipv6
+  labels:
+    app: what-is-my-ipv6
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: what-is-my-ipv6
+  template:
+    metadata:
+      labels:
+        app: what-is-my-ipv6
+    spec:
+      containers:
+      - name: what-is-my-ipv6
+        image: ghcr.io/haahaakon/what-is-my-ipv6
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "100m"
+          limits:
+            memory: "128Mi"
+            cpu: "200m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: what-is-my-ipv6
+  namespace: what-is-my-ipv6
+  labels:
+    app: what-is-my-ipv6
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 8080
+    protocol: TCP
+    name: http
+  selector:
+    app: what-is-my-ipv6
