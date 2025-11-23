@@ -17,11 +17,12 @@ func getClientIP(context *gin.Context) {
 	fmt.Println(host)
 	fmt.Println(remoteAddr)
 	fmt.Println(forwarded_for)
+	fmt.Println(content_type)
 
 	if strings.ToLower(content_type) == "application/json" {
-		context.JSON(http.StatusOK, gin.H{"host": host, "remoteAddr": remoteAddr, "forwarded_for": forwarded_for})
+		context.JSON(http.StatusOK, gin.H{"ipv6": forwarded_for})
 		return
 	}
-	context.String(http.StatusOK, "Host: %s\r\nRemote-IP (TCP): %s\r\nRemote-IP (HTTP): %s\r\nContent-Type: %s\r\n", host, remoteAddr, forwarded_for, content_type)
+	context.String(http.StatusOK, "IPv6: %s\r\n", forwarded_for)
 
 }
