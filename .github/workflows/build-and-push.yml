@@ -10,14 +10,6 @@ on:
       - 'go.sum'
       - 'Dockerfile'
       - '.github/workflows/build-and-push.yml'
-  pull_request:
-    branches:
-      - main
-    paths:
-      - '**/*.go'
-      - 'go.mod'
-      - 'go.sum'
-      - 'Dockerfile'
   workflow_dispatch:
 
 env:
@@ -52,7 +44,6 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
             type=ref,event=branch
-            type=ref,event=pr
             type=sha,prefix={{branch}}-
             type=raw,value=latest,enable={{is_default_branch}}
 
