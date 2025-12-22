@@ -1,6 +1,6 @@
 module github.com/haahaakon/what-is-my-ipv6
 
-go 1.25.1
+go 1.25.5
 
 require (
 	github.com/bytedance/sonic v1.14.0 // indirect
