@@ -23,6 +23,6 @@ func getClientIP(context *gin.Context) {
 		context.JSON(http.StatusOK, gin.H{"ipv6": forwarded_for})
 		return
 	}
-	context.String(http.StatusOK, "IPv6: %s\r\n", forwarded_for)
+	context.String(http.StatusOK, "IP: %s\r\n", forwarded_for)
 
 }
